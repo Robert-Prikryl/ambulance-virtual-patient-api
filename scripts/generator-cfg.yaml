@@ -1,8 +1,8 @@
 generatorName: go-gin-server
 outputDir: /local
-inputSpec: /local/api/ambulance-wl.openapi.yaml
+inputSpec: /local/api/ambulance-virtual-patient-list.openapi.yaml
 enablePostProcessFile: true
 additionalProperties:
-  apiPath: internal/ambulance_wl
-  packageName: ambulance_wl
+  apiPath: internal/ambulance_virtual_patient_list
+  packageName: ambulance_virtual_patient_list
   interfaceOnly: true

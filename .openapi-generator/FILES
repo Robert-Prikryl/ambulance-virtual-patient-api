@@ -1,0 +1,4 @@
+internal/ambulance_virtual_patient_list/README.md
+internal/ambulance_virtual_patient_list/api_virtual_patient_list.go
+internal/ambulance_virtual_patient_list/model_virtual_patient.go
+internal/ambulance_virtual_patient_list/routers.go

@@ -1,0 +1,96 @@
+openapi: 3.0.0
+servers:
+  - description: Cluster Endpoint
+    url: /api
+info:
+  description: Virtual Patient List management for Web-In-Cloud system
+  version: "1.0.0"
+  title: Virtual Patient List Api
+  contact:
+    email: your_email@stuba.sk
+  license:
+    name: CC BY 4.0
+    url: "https://creativecommons.org/licenses/by/4.0/"
+tags:
+- name: virtualPatientList
+  description: Virtual Patient List API
+
+
+paths:
+  "/virtual-patient-list/entries":
+    get:
+      tags:
+        - virtualPatientList
+      summary: Provides the virtual patient list
+      operationId: getVirtualPatientList
+      description: Provides the list of all virtual patients
+      responses:
+        "200":
+          description: List of virtual patients
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/VirtualPatient"
+              examples:
+                response:
+                  $ref: "#/components/examples/VirtualPatientExample"
+        "404":
+          description: Virtual patient with such ID does not exist
+
+
+components:
+  schemas:
+    VirtualPatient:
+      type: object
+      required: [id, name, recordId, difficulty, symptoms, anamnesis]
+      properties:
+        id:
+          type: string
+          example: "vp-001"
+          description: Unique identifier of the virtual patient
+        name:
+          type: string
+          example: "John Doe"
+          description: Name of the virtual patient
+        recordId:
+          type: string
+          example: "mongo-record-123"
+          description: MongoDB record identifier
+        difficulty:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 5
+          example: 1
+          description: >-
+            Difficulty of the virtual patient. 1 is the easiest, 5 is the hardest.
+        symptoms:
+          type: array
+          items:
+            type: string
+          example: ["fever", "cough", "fatigue"]
+          description: List of symptoms the virtual patient is experiencing
+        anamnesis:
+          type: string
+          example: "Patient reports feeling unwell for the past 3 days"
+          description: Medical history and current condition description
+      example:
+        $ref: "#/components/examples/VirtualPatientExample"
+
+  examples:
+    VirtualPatientExample:
+      value:
+        - id: "vp-001"
+          name: "Anna Kováčová"
+          recordId: "mongo-record-123"
+          difficulty: 2
+          symptoms: ["fever", "cough", "fatigue"]
+          anamnesis: "Patient reports feeling unwell for the past 3 days"
+        - id: "vp-002"
+          name: "Filip Mocháč"
+          recordId: "mongo-record-456"
+          difficulty: 3
+          symptoms: ["headache", "nausea", "dizziness"]
+          anamnesis: "Patient reports severe headache and dizziness since morning"
