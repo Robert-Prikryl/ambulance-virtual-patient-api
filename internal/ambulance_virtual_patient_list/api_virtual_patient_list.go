@@ -17,8 +17,20 @@ import (
 type VirtualPatientListAPI interface {
 
 
+    // CreateVirtualPatient Post /api/virtual-patient-list/entries
+    // Creates a new virtual patient 
+     CreateVirtualPatient(c *gin.Context)
+
+    // DeleteVirtualPatient Delete /api/virtual-patient-list/entries/:virtualPatientId
+    // Deletes a virtual patient 
+     DeleteVirtualPatient(c *gin.Context)
+
     // GetVirtualPatientList Get /api/virtual-patient-list/entries
     // Provides the virtual patient list 
      GetVirtualPatientList(c *gin.Context)
+
+    // UpdateVirtualPatient Put /api/virtual-patient-list/entries/:virtualPatientId
+    // Updates a virtual patient 
+     UpdateVirtualPatient(c *gin.Context)
 
 }

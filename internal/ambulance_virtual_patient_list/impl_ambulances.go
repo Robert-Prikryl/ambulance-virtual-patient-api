@@ -167,3 +167,68 @@ func (o implVirtualPatientListAPI) DeleteVirtualPatient(c *gin.Context) {
 			})
 	}
 }
+
+func (o implVirtualPatientListAPI) UpdateVirtualPatient(c *gin.Context) {
+	value, exists := c.Get("db_service")
+	if !exists {
+		c.JSON(
+			http.StatusInternalServerError,
+			gin.H{
+				"status":  "Internal Server Error",
+				"message": "db_service not found",
+				"error":   "db_service not found",
+			})
+		return
+	}
+
+	db, ok := value.(db_service.DbService[VirtualPatient])
+	if !ok {
+		c.JSON(
+			http.StatusInternalServerError,
+			gin.H{
+				"status":  "Internal Server Error",
+				"message": "db_service context is not of type db_service.DbService",
+				"error":   "cannot cast db_service context to db_service.DbService",
+			})
+		return
+	}
+
+	virtualPatientId := c.Param("virtualPatientId")
+	virtualPatient := VirtualPatient{}
+
+	if err := c.BindJSON(&virtualPatient); err != nil {
+		c.JSON(
+			http.StatusBadRequest,
+			gin.H{
+				"status":  "Bad Request",
+				"message": "Invalid request body",
+				"error":   err.Error(),
+			})
+		return
+	}
+
+	// Ensure the ID in the path matches the ID in the body
+	virtualPatient.Id = virtualPatientId
+
+	err := db.UpdateDocument(c, virtualPatientId, &virtualPatient)
+	switch err {
+	case nil:
+		c.JSON(http.StatusOK, virtualPatient)
+	case db_service.ErrNotFound:
+		c.JSON(
+			http.StatusNotFound,
+			gin.H{
+				"status":  "Not Found",
+				"message": "Virtual patient not found",
+				"error":   err.Error(),
+			})
+	default:
+		c.JSON(
+			http.StatusBadGateway,
+			gin.H{
+				"status":  "Bad Gateway",
+				"message": "Failed to update virtual patient in database",
+				"error":   err.Error(),
+			})
+	}
+}

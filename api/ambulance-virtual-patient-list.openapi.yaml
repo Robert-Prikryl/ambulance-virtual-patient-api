@@ -38,6 +38,120 @@ paths:
                   $ref: "#/components/examples/VirtualPatientExample"
         "404":
           description: Virtual patient with such ID does not exist
+    post:
+      tags:
+        - virtualPatientList
+      summary: Creates a new virtual patient
+      operationId: createVirtualPatient
+      description: Creates a new virtual patient record
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VirtualPatient"
+            examples:
+              newPatient:
+                value:
+                  name: "Peter Novák"
+                  recordId: "mongo-record-789"
+                  difficulty: 4
+                  symptoms: ["chest pain", "shortness of breath", "sweating"]
+                  anamnesis: "Patient reports severe chest pain and difficulty breathing"
+      responses:
+        "201":
+          description: Virtual patient created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VirtualPatient"
+              examples:
+                response:
+                  value:
+                    id: "vp-003"
+                    name: "Peter Novák"
+                    recordId: "mongo-record-789"
+                    difficulty: 4
+                    symptoms: ["chest pain", "shortness of breath", "sweating"]
+                    anamnesis: "Patient reports severe chest pain and difficulty breathing"
+        "400":
+          description: Invalid request body
+        "409":
+          description: Virtual patient with this ID already exists
+        "502":
+          description: Database error
+
+  "/virtual-patient-list/entries/{virtualPatientId}":
+    put:
+      tags:
+        - virtualPatientList
+      summary: Updates a virtual patient
+      operationId: updateVirtualPatient
+      description: Updates an existing virtual patient record
+      parameters:
+        - name: virtualPatientId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the virtual patient to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VirtualPatient"
+            examples:
+              updatePatient:
+                value:
+                  id: "vp-001"
+                  name: "Anna Kováčová"
+                  recordId: "mongo-record-123"
+                  difficulty: 3
+                  symptoms: ["fever", "cough", "fatigue", "headache"]
+                  anamnesis: "Patient reports worsening symptoms and new headache"
+      responses:
+        "200":
+          description: Virtual patient updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VirtualPatient"
+              examples:
+                response:
+                  value:
+                    id: "vp-001"
+                    name: "Anna Kováčová"
+                    recordId: "mongo-record-123"
+                    difficulty: 3
+                    symptoms: ["fever", "cough", "fatigue", "headache"]
+                    anamnesis: "Patient reports worsening symptoms and new headache"
+        "400":
+          description: Invalid request body
+        "404":
+          description: Virtual patient not found
+        "502":
+          description: Database error
+    delete:
+      tags:
+        - virtualPatientList
+      summary: Deletes a virtual patient
+      operationId: deleteVirtualPatient
+      description: Deletes an existing virtual patient record
+      parameters:
+        - name: virtualPatientId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the virtual patient to delete
+      responses:
+        "204":
+          description: Virtual patient deleted successfully
+        "404":
+          description: Virtual patient not found
+        "502":
+          description: Database error
 
 
 components:

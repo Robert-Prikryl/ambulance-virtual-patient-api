@@ -70,10 +70,28 @@ type ApiHandleFunctions struct {
 func getRoutes(handleFunctions ApiHandleFunctions) []Route {
 	return []Route{ 
 		{
+			"CreateVirtualPatient",
+			http.MethodPost,
+			"/api/virtual-patient-list/entries",
+			handleFunctions.VirtualPatientListAPI.CreateVirtualPatient,
+		},
+		{
+			"DeleteVirtualPatient",
+			http.MethodDelete,
+			"/api/virtual-patient-list/entries/:virtualPatientId",
+			handleFunctions.VirtualPatientListAPI.DeleteVirtualPatient,
+		},
+		{
 			"GetVirtualPatientList",
 			http.MethodGet,
 			"/api/virtual-patient-list/entries",
 			handleFunctions.VirtualPatientListAPI.GetVirtualPatientList,
+		},
+		{
+			"UpdateVirtualPatient",
+			http.MethodPut,
+			"/api/virtual-patient-list/entries/:virtualPatientId",
+			handleFunctions.VirtualPatientListAPI.UpdateVirtualPatient,
 		},
 	}
 }
