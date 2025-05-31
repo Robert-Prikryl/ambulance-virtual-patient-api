@@ -44,13 +44,44 @@ db[collection].createIndex({ "id": 1 })
 //insert sample data
 let result = db[collection].insertMany([
     {
-        "id": "bobulova",
-        "name": "Dr.Bobulová",
-        "roomNumber": "123",
-        "predefinedConditions": [
-            { "value": "Nádcha", "code": "rhinitis" },
-            { "value": "Kontrola", "code": "checkup" }
-        ]
+        id: "vp-001",
+        name: "Anna Kováčová",
+        recordId: "mongo-record-123",
+        difficulty: 2,
+        symptoms: ["fever", "cough", "fatigue"],
+        anamnesis: "Patient reports feeling unwell for the past 3 days"
+    },
+    {
+        id: "vp-002",
+        name: "Filip Mocháč",
+        recordId: "mongo-record-456",
+        difficulty: 3,
+        symptoms: ["headache", "nausea", "dizziness"],
+        anamnesis: "Patient reports severe headache and dizziness since morning"
+    },
+    {
+        id: "vp-003",
+        name: "Peter Novák",
+        recordId: "mongo-record-789",
+        difficulty: 4,
+        symptoms: ["chest pain", "shortness of breath", "sweating"],
+        anamnesis: "Patient reports severe chest pain and difficulty breathing"
+    },
+    {
+        id: "vp-004",
+        name: "Mária Horváthová",
+        recordId: "mongo-record-101",
+        difficulty: 1,
+        symptoms: ["sore throat", "runny nose", "mild fever"],
+        anamnesis: "Patient reports cold-like symptoms for 2 days"
+    },
+    {
+        id: "vp-005",
+        name: "Ján Tóth",
+        recordId: "mongo-record-202",
+        difficulty: 5,
+        symptoms: ["severe abdominal pain", "vomiting", "fever", "dehydration"],
+        anamnesis: "Patient reports acute abdominal pain and persistent vomiting for 12 hours"
     }
 ]);
 
